@@ -173,13 +173,14 @@ if __name__ == '__main__':
     print (args.echo)
     '''
 
+    print('----------------------------------------------')
     ourl = input("Please input BaiduPan URL: ")
     ourl = 'http://pan.baidu.com/s/1gfN99L5'
     run = Parser(ourl)
     
     run.getYunData()
     print('----------------------------------------------')
-    print('fn = ', run.fn)
+    print('fn = ', run.fn.encode('utf-8').decode('unicode_escape'))
     print('fs_id = ', run.fs_id)
     print('share_uk = ', run.share_uk)
     print('share_id = ', run.share_id)
@@ -189,6 +190,7 @@ if __name__ == '__main__':
 
     run.getDlink()
     print ("Download Link: ", run.dlink)
+    print('----------------------------------------------')
 
 
 
