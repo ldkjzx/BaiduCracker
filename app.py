@@ -12,10 +12,9 @@ import http.cookiejar
 import urllib.request, urllib.parse, urllib.error
 import random  
 import re  
-
-
-
 import json
+import os
+
 import distutils.spawn
 import subprocess
 
@@ -96,15 +95,13 @@ class Parser(object):
             self.html = response.read().decode('utf-8')
 
             #self.html = urllib.request.urlopen(req).read().decode('utf-8')
-            #print(self.html)
+            print(self.html)
         except:
             raise Exception('--->>> URL Error')
 
         # Check HTML page correct or not
         if self.html.find('<head>') == False:
             raise Exception('--->>> Cannot get correct HTML page.')
-
-
 
 
     def getYunData(self):
@@ -146,8 +143,6 @@ class Parser(object):
 
 
 
-
-
     def getDlink(self):
 
         purl = 'http://pan.baidu.com/api/sharedownload?sign='+self.share_sign+'&timestamp='+self.share_timestamp
@@ -165,17 +160,18 @@ class Parser(object):
 
 
 
+class AutoXunlei(object):
+    def __init__(self, dlink):
+        os.chdir("D:\\Program Files (x86)\\Thunder Network\\Thunder\\Program\\")
+        os.system("Thunder.exe -StartType:DesktopIcon \"%s\""%dlink)
+
+
+
 if __name__ == '__main__':
-    '''
-    parser = argparse.ArgumentParser()
-    parser.add_argument("echo", help="echo the string you use here")
-    args = parser.parse_args()
-    print (args.echo)
-    '''
 
     print('----------------------------------------------')
     ourl = input("Please input BaiduPan URL: ")
-    ourl = 'http://pan.baidu.com/s/1gfN99L5'
+    ourl = 'http://pan.baidu.com/s/1kUHfFGr'
     run = Parser(ourl)
     
     run.getYunData()
@@ -191,6 +187,21 @@ if __name__ == '__main__':
     run.getDlink()
     print ("Download Link: ", run.dlink)
     print('----------------------------------------------')
+
+
+    if not run.dlink == None:
+        cmd = input('Trigger Dnowload by Xunlei? (Y/N): ')
+
+        while cmd != 'Y' and cmd != 'N':
+            cmd = input('Incorrect input! Please type Y/N: ')
+
+        if cmd == 'Y':
+            AutoXunlei(run.dlink)
+            print('--------------------END-----------------------')
+        else:
+            print('--------------------END-----------------------')
+    else:
+        pass
 
 
 
